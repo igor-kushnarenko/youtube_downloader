@@ -22,5 +22,5 @@ def download_video(url):
 
 if __name__ == '__main__':
     url = get_url()
-    # что скачать, аудио или видео?
+    # todo что скачать, аудио или видео?
     download_video(url)
