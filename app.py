@@ -12,7 +12,16 @@ class YouTubeDownloader:
         self.url = url
 
     def run(self):
-        self.video_downloader()
+        self.user_choice()
+
+    def user_choice(self):
+        print('Что скачать?')
+        user_choice = input('1. Видео 2. Аудио: ')
+        # todo засунуть проверку ввода пользователя
+        if user_choice == '1':
+            self.video_downloader()
+        if user_choice == '2':
+            self.audio_downloader()
 
     def check_url(self):
         match = re.match(self.re_url, self.url)
@@ -28,8 +37,17 @@ class YouTubeDownloader:
         video.download()
         print('Видео скачано успешно!')
 
+    def audio_downloader(self):
+        video_url = self.check_url()
+        youtube = YouTube(url=video_url)
+        audio = youtube.streams.filter(only_audio=True).first()
+        audio.download()
+        # todo изменить расширение файла на .mp3
+        print('Аудио скачано успешно!')
+
 
 if __name__ == '__main__':
+    # 'https://www.youtube.com/watch?v=Hk4eMIswunQ'
     url = input('Вставьте ссылку: ')
     download = YouTubeDownloader(url=url)
     download.run()
