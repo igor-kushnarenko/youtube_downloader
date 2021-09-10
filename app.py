@@ -8,46 +8,56 @@ class YouTubeDownloader:
                         r'watch\?v=|watch\?.+(?:&|&#38;);v=))([a-zA-Z0-9\-_]{11})?(?:(?:\?|&|&#38;)'
                         r'index=((?:\d){1,3}))?(?:(?:\?|&|&#38;)?list=([a-zA-Z\-_0-9]{34}))?(?:\S+)?')
 
-    def __init__(self, url):
-        self.url = url
+    def __init__(self):
+        self.url = None
+        self.video_trigger = None
 
     def run(self):
-        self.user_choice()
+        url = self.get_url()
+        video = self.video_init(url)
+        self.user_choice(video)
 
-    def user_choice(self):
-        print('Что скачать?')
-        user_choice = input('1. Видео 2. Аудио: ')
-        # todo засунуть проверку ввода пользователя
-        if user_choice == '1':
-            self.video_downloader()
-        if user_choice == '2':
-            self.audio_downloader()
+    def user_choice(self, video):
+        while True:
+            print('Что скачать?')
+            user_choice = input('1. Видео 2. Аудио: ')
+            if user_choice == '1':
+                self.video_trigger = 1
+            elif user_choice == '2':
+                self.video_trigger = None
+            else:
+                print('Введите корректные данные!')
+                continue
+            self.downloader(video)
+            break
 
-    def check_url(self):
-        match = re.match(self.re_url, self.url)
-        if match:
-            return self.url
+    def get_url(self):
+        while True:
+            url_from_user = input('Вставьте ссылку: ')
+            match = re.match(self.re_url, url_from_user)
+            if match:
+                self.url = url_from_user
+                return self.url
+            else:
+                print('Вставьте корректную ссылку!')
+                continue
+
+    def downloader(self, youtube_url):
+        if self.video_trigger:
+            file = youtube_url.streams.filter(progressive=True).desc().first()
         else:
-            print('Вставьте корректную ссылку!')
+            file = youtube_url.streams.filter(only_audio=True).first()
+            # todo изменить расширение файла на .mp3
+        file.download(output_path='files/')
+        print('Файл скачан успешно!')
 
-    def video_downloader(self):
-        video_url = self.check_url()
-        youtube = YouTube(url=video_url)
-        video = youtube.streams.filter(progressive=True).desc().first()
-        video.download()
-        print('Видео скачано успешно!')
-
-    def audio_downloader(self):
-        video_url = self.check_url()
-        youtube = YouTube(url=video_url)
-        audio = youtube.streams.filter(only_audio=True).first()
-        audio.download()
-        # todo изменить расширение файла на .mp3
-        print('Аудио скачано успешно!')
+    def video_init(self, url):
+        youtube = YouTube(url=url)
+        print(youtube.title)
+        return youtube
 
 
 if __name__ == '__main__':
-    # 'https://www.youtube.com/watch?v=Hk4eMIswunQ'
-    url = input('Вставьте ссылку: ')
-    download = YouTubeDownloader(url=url)
+    # 'https://www.youtube.com/watch?v=HglA72ogPCE'
+    download = YouTubeDownloader()
     download.run()
