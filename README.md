@@ -1,4 +1,4 @@
-Weather forecast
+Download video or audio from Youtube
 ====
 * Script for the weather forecast.
 * Output of the forecast to the console.
@@ -12,7 +12,7 @@ Requirements
 
 Download/Installation
 ====
-* git clone https://github.com/igor-kushnarenko/weather_cards
+* git clone https://github.com/igor-kushnarenko/youtube_downloader
 * pip3 install -r requirements.txt --user
 
 if pip3 is missing:
@@ -23,22 +23,12 @@ if pip3 is missing:
 
 Features
 ====
-* Weather forecast for today, tomorrow, on the date, for the period.
-* Checking the forecast on the command line.
+With this script, you can download a video or audio from a link to youtube.
 
 Commands for console
 ====
-Weather update
+Save video
 * python weather_console.py update
 
-Weather for today
+Save audio
 * python weather_console.py today
-
-Weather for tomorrow
-* python weather_console.py tomorrow
-
-Weather for date
-* python weather_console.py to_date
-
-Weather for period
-* python weather_console.py from_to
