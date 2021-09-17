@@ -1,3 +1,4 @@
+import os
 import re
 
 from pytube import YouTube
@@ -45,10 +46,11 @@ class YouTubeDownloader:
     def downloader(self, youtube_url):
         if self.video_trigger:
             file = youtube_url.streams.filter(progressive=True).desc().first()
+            file.download(output_path='files/videos')
         else:
             file = youtube_url.streams.filter(only_audio=True).first()
-            # todo изменить расширение файла на .mp3
-        file.download(output_path='files/')
+            file.download(output_path='files/audio')
+            os.rename(f'files/audio/{file.title}.mp4', f'files/audio/{file.title}.mp3')
         print('Файл скачан успешно!')
 
     def video_init(self, url):
