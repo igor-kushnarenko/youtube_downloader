@@ -1,18 +1,23 @@
-import tkinter as tk
+from tkinter import *
 
 
 def msg():
-    print('Hello stdout')
+    lbl.configure(text='Download success.')
 
 
-top = tk.Frame()
-top.pack()
-tk.Label(top, text='youtube_downloader').pack(side=tk.TOP)
-entry_link = tk.Entry(top)
-entry_link.pack(side=tk.TOP)
-widget = tk.Button(top, text='video', command=msg)
-widget.pack(side=tk.BOTTOM)
-widget = tk.Button(top, text='audio', command=msg)
-widget.pack(side=tk.BOTTOM)
+window = Tk()
+window.title('youtuber')
+window.geometry('200x90')
 
-top.mainloop()
+lbl = Label(window, text='insert video link', font=("FreeMono", 10)).pack(side=TOP)
+
+entry_link = Entry(window)
+entry_link.pack(side=TOP)
+
+widget = Button(window, text='audio', font=("FreeMono", 10), command=msg)
+widget.pack(side=RIGHT)
+
+widget = Button(window, text='video', font=("FreeMono", 10), command=msg)
+widget.pack(side=LEFT)
+
+window.mainloop()
