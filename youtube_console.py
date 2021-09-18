@@ -1,51 +1,32 @@
 import argparse
 
-from weather import Manager
+from app import YouTubeDownloader
 
-manager = Manager()
-
-parser = argparse.ArgumentParser(
-    prog='WeatherForecast',
-    description='Weather forecast',
-)
-subparser = parser.add_subparsers()
-
-"""Обновление базы"""
-parser_weather_date = subparser.add_parser(
-    'update',
-    help='Обновление данных о погоде. '
-         'При запросе происходит парсинг с сайта https://sinoptik.com.ru/. '
-         'Пример ввода: python weather_console.py update')
-parser_weather_date.set_defaults(func=manager.parse_data_send_to_db)
-
-"""Погода за сегодняшнее число"""
-parser_weather_date = subparser.add_parser(
-    'today',
-    help='Погода на сегодня. '
-         'Пример ввода команды для запуска: python weather_console.py today')
-parser_weather_date.set_defaults(func=manager.today_forecast)
-
-"""Погода на завтра"""
-parser_weather_date = subparser.add_parser(
-    'tomorrow',
-    help='Погода на завтра. '
-         'Пример ввода команды для запуска: python weather_console.py tomorrow')
-parser_weather_date.set_defaults(func=manager.tomorrow_forecast)
-
-"""Погода на определенную дату"""
-parser_weather_date = subparser.add_parser(
-    'to_date',
-    help='Погода на определенную дату. Что бы узнать погоду на 9 июля, '
-         'необходимо ввести номер месяца: 7 и дату: 9. '
-         'Пример ввода команды для запуска: python weather_console.py to_date')
-parser_weather_date.set_defaults(func=manager.get_card_from_date)
-
-"""Погода за период"""
-parser_weather_date = subparser.add_parser(
-    'from_to',
-    help='Погода за период с _ по _. '
-         'Пример ввода команды для запуска python weather_console.py from_to')
-parser_weather_date.set_defaults(func=manager.choice_dates_forecast)
-
+parser = argparse.ArgumentParser(description='Video downloader')
+parser.add_argument('link', type=str, help='Lin to videos')
 args = parser.parse_args()
-args.func()
+print(args.link)
+
+
+# downloader = YouTubeDownloader()
+#
+# parser = argparse.ArgumentParser(
+#     prog='Youtube Downloader',
+#     description='Youtube Downloader',
+# )
+# subparser = parser.add_subparsers()
+#
+# """Video download"""
+# video_downloader = subparser.add_parser(
+#     '-v',
+#     help='Video download. Command: python youtube_console.py <video_link> -v')
+# video_downloader.set_defaults(func=downloader.video_downloader)
+#
+# """Audio download"""
+# audio_downloader = subparser.add_parser(
+#     '-a',
+#     help='Video download. Command: python youtube_console.py <video_link> -a')
+# audio_downloader.set_defaults(func=downloader.audio_downloader)
+#
+# args = parser.parse_args()
+# args.func()
