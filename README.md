@@ -27,8 +27,5 @@ With this script, you can download a video or audio from a link to youtube.
 
 Commands for console
 ====
-Save video
-* python weather_console.py update
-
-Save audio
-* python weather_console.py today
+Save video or audio
+* python youtube_console.py https://youtu.be/link_to_video

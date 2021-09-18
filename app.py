@@ -68,7 +68,6 @@ class GetLink:
 
 
 if __name__ == '__main__':
-    # 'https://www.youtube.com/watch?v=HglA72ogPCE'
     link = GetLink().get_url()
     downloader = YouTubeDownloader(link)
     downloader.run()
