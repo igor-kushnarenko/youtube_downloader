@@ -11,7 +11,7 @@ class YouTubeDownloader:
         self.video_trigger = None
 
     def run(self):
-        video = self.video_init(self.url)
+        video = self.video_init()
         self.user_choice(video)
 
     def user_choice(self, video):
@@ -31,21 +31,23 @@ class YouTubeDownloader:
     def audio_downloader(self, youtube_url):
         file = youtube_url.streams.filter(only_audio=True).first()
         file.download(output_path='files/audio')
-        os.rename(f'files/audio/{file.title}.mp4', f'files/audio/{file.title}.mp3')
+        print(file.title)
+        os.rename(f'/files/audio/{file.title}.mp4',
+                  f'/files/audio/{file.title}.mp3')
 
     def video_downloader(self, youtube_url):
         file = youtube_url.streams.filter(progressive=True).desc().first()
         file.download(output_path='files/videos')
 
-    def downloader(self, youtube_url):
+    def downloader(self, video):
         if self.video_trigger:
-            self.video_downloader(youtube_url)
+            self.video_downloader(video)
         else:
-            self.audio_downloader(youtube_url)
+            self.audio_downloader(video)
         print('Файл скачан успешно!')
 
-    def video_init(self, url):
-        youtube = YouTube(url=url)
+    def video_init(self):
+        youtube = YouTube(url=self.url)
         print(youtube.title)
         return youtube
 
