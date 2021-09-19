@@ -30,14 +30,13 @@ class YouTubeDownloader:
 
     def audio_downloader(self, youtube_url):
         file = youtube_url.streams.filter(only_audio=True).first()
-        file.download(output_path='files/audio')
-        print(file.title)
-        os.rename(f'/files/audio/{file.title}.mp4',
-                  f'/files/audio/{file.title}.mp3')
+        file.download(output_path='files/audio', filename=f'{file.title}.mp4')
+        os.rename(f'files/audio/{file.title}.mp4',
+                  f'files/audio/{file.title}.mp3')
 
     def video_downloader(self, youtube_url):
         file = youtube_url.streams.filter(progressive=True).desc().first()
-        file.download(output_path='files/videos')
+        file.download(output_path='files/videos', filename=f'{file.title}.mp4')
 
     def downloader(self, video):
         if self.video_trigger:
