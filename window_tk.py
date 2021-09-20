@@ -4,7 +4,6 @@ from app import YouTubeDownloader
 
 
 def video_download():
-    # https://youtu.be/s6Sdou-npRM
     link = entry_link.get()
     downloader = YouTubeDownloader(link)
     video = downloader.video_init()
